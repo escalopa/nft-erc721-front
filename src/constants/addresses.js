@@ -1,0 +1,2 @@
+export const SPACE_TOKEN_CONTRACT_ADDRESS =
+  "0x0b892b11d225f995fcf851dab21b3702e83db48c";
