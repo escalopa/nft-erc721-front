@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from "react";
 
-import Contract from "web3-eth-contract";
-import { create } from "ipfs-http-client";
+// import Contract from "web3-eth-contract";
+// import { create } from "ipfs-http-client";
 
 import { SPACE_TOKEN_CONTRACT_ADDRESS } from "../constants/addresses";
 import SpaceContracABI from "../contracts/spaceToken.json";
@@ -28,18 +28,28 @@ export function ContractContextWrapper({ children }) {
 }
 
 function connectToSpaceTokenContract() {
-  Contract.setProvider(window.ethereum);
-  const spaceTokenContract = new Contract(
-    SpaceContracABI,
-    SPACE_TOKEN_CONTRACT_ADDRESS
-  );
-  return spaceTokenContract;
+  const { ethers } = require("ethers");
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      SPACE_TOKEN_CONTRACT_ADDRESS,
+      SpaceContracABI.abi,
+      signer
+    );
+
+    return contract;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
 }
 
 function connectToIPFS() {
-  return create({
-    url: "https://ipfs.infura.io:5001/api/v0",
-  });
+  return undefined;
+  // return create({
+  //   url: "https://ipfs.infura.io:5001/api/v0",
+  // });
 }
 
 export default function useContract() {
