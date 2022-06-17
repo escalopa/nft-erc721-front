@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "@mui/material";
 
-import { connect, isAddressConnected } from "../../utils/metaMask";
+import { connect } from "../../utils/metaMask";
 
 export default function MetaMaskConnectButton() {
   const [connectDisabled, setConnectDisabled] = useState(false);
 
   useEffect(() => {
-    if (isAddressConnected()) {
+    const isAddress = window.ethereum.selectedAddress !== null;
+    if (isAddress) {
       setConnectDisabled(true);
     } else {
       setConnectDisabled(false);
