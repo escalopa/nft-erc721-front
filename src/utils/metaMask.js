@@ -10,10 +10,11 @@ export async function connect() {
   return false;
 }
 
-export async function isAddressConnected() {
-  return !!(await getCurrentAddress());
+export function isAddressConnected() {
+  return !!getCurrentAddress();
 }
 
-export async function getCurrentAddress() {
-  return await window.ethereum.selectedAddress;
+export function getCurrentAddress() {
+  console.log(window.ethereum.selectedAddress);
+  return window.ethereum.selectedAddress;
 }
